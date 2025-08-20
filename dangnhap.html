@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng nhập</title>
+  <style>
+    :root{
+      --bg:#0f172a;        /* slate-900 */
+      --card:#111827dd;    /* gray-900 */
+      --text:#e5e7eb;      /* gray-200 */
+      --muted:#94a3b8;     /* slate-400 */
+      --primary:#6366f1;   /* indigo-500 */
+      --primary-2:#22d3ee; /* cyan-400 */
+      --danger:#ef4444;    /* red-500 */
+      --ok:#10b981;        /* emerald-500 */
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% 10%, #1f2937 0%, transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, #0ea5e9 0%, transparent 50%),
+        radial-gradient(900px 600px at 50% 90%, #6366f1 0%, transparent 55%),
+        var(--bg);
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .card{
+      width:100%;
+      max-width:420px;
+      background:linear-gradient(180deg, #111827ee, #0b1222ee);
+      border:1px solid #1f2937;
+      border-radius:20px;
+      padding:28px;
+      box-shadow:0 20px 60px #0008, inset 0 1px 0 #ffffff0d;
+      backdrop-filter: blur(8px);
+      animation: pop .5s ease;
+    }
+    @keyframes pop{from{transform:translateY(8px);opacity:.0}to{transform:none;opacity:1}}
+    .brand{
+      display:flex;align-items:center;gap:12px;margin-bottom:20px
+    }
+    .logo{
+      width:42px;height:42px;border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, var(--primary-2), var(--primary));
+      display:grid;place-items:center;
+      color:white;font-weight:700;
+      text-shadow:0 2px 10px #0006;
+      box-shadow:0 6px 18px #0006, 0 0 0 1px #ffffff0d inset;
+    }
+    h1{font-size:22px;margin:0}
+    p.sub{margin:2px 0 0 0;color:var(--muted);font-size:14px}
+    form{margin-top:10px;display:grid;gap:14px}
+    .field{display:grid;gap:6px}
+    label{font-size:14px;color:#cbd5e1}
+    .input{
+      position:relative
+    }
+    input[type="text"], input[type="password"], input[type="email"]{
+      width:100%;
+      padding:12px 44px 12px 12px;
+      border-radius:12px;
+      border:1px solid #243045;
+      background:#0b1220;
+      color:var(--text);
+      outline:none;
+      transition:border-color .15s, box-shadow .15s;
+      box-shadow:0 0 0 0 rgba(99,102,241,0);
+    }
+    input:focus{
+      border-color:#42527a;
+      box-shadow:0 0 0 3px #6366f133;
+    }
+    .toggle{
+      position:absolute;right:10px;top:50%;transform:translateY(-50%);
+      cursor:pointer;border:none;background:#0e1628;color:#cbd5e1;
+      padding:6px 10px;border-radius:10px;font-size:12px
+    }
+    .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .row small{color:var(--muted)}
+    .actions{display:grid;gap:10px;margin-top:6px}
+    .btn{
+      border:none;cursor:pointer;
+      padding:12px 14px;border-radius:12px;font-weight:600;
+      transition:transform .05s ease, box-shadow .15s ease, background .2s;
+    }
+    .btn-primary{
+      background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      color:white;box-shadow:0 10px 25px #14b8a61f;
+    }
+    .btn-primary:active{transform:translateY(1px)}
+    .btn-ghost{
+      background:transparent;color:#cbd5e1;border:1px solid #21304a;
+    }
+    .helper{
+      display:flex;justify-content:center;gap:8px;color:var(--muted);font-size:14px
+    }
+    .error{color:var(--danger);font-size:13px;min-height:18px}
+    .success{color:var(--ok);font-size:14px}
+    a{color:#93c5fd;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .footer{
+      margin-top:14px;text-align:center;color:#94a3b8;font-size:12px
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-labelledby="title">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">LN</div>
+      <div>
+        <h1 id="title">Đăng nhập</h1>
+        <p class="sub">Chào mừng bạn trở lại 👋</p>
+      </div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Email hoặc Tên đăng nhập</label>
+        <div class="input">
+          <input id="email" name="email" type="text" placeholder="vd: user@example.com" autocomplete="username" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="password">Mật khẩu</label>
+        <div class="input">
+          <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required minlength="6" />
+          <button type="button" class="toggle" id="togglePwd" aria-label="Hiện/ẩn mật khẩu">Hiện</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#cbd5e1">
+          <input id="remember" type="checkbox" /> Ghi nhớ đăng nhập
+        </label>
+        <a href="#" onclick="alert('Tính năng quên mật khẩu đang cập nhật!');return false;">Quên mật khẩu?</a>
+      </div>
+
+      <div class="error" id="errorBox" aria-live="polite"></div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Đăng nhập</button>
+        <button class="btn btn-ghost" type="reset">Xoá thông tin</button>
+      </div>
+    </form>
+
+    <div class="helper" style="margin-top:10px">
+      <span>Chưa có tài khoản?</span><a href="#">Đăng ký ngay</a>
+    </div>
+
+    <div class="footer">© 2025 Cửa Hàng Online</div>
+  </div>
+
+  <script>
+    // Hiện/ẩn mật khẩu
+    const pwd = document.getElementById('password');
+    const togglePwd = document.getElementById('togglePwd');
+    togglePwd.addEventListener('click', () => {
+      const isHidden = pwd.type === 'password';
+      pwd.type = isHidden ? 'text' : 'password';
+      togglePwd.textContent = isHidden ? 'Ẩn' : 'Hiện';
+      pwd.focus();
+    });
+
+    // Kiểm tra và mô phỏng đăng nhập (demo phía client)
+    const form = document.getElementById('loginForm');
+    const errorBox = document.getElementById('errorBox');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const email = form.email.value.trim();
+      const password = form.password.value;
+
+      // Kiểm tra đơn giản
+      if (!email || !password) {
+        showError('Vui lòng nhập đầy đủ thông tin.');
+        return;
+      }
+      if (password.length < 6) {
+        showError('Mật khẩu phải có ít nhất 6 ký tự.');
+        return;
+      }
+
+      // Demo: tài khoản mẫu
+      const demoUser = 'admin';
+      const demoPass = '123456';
+
+      if ((email.toLowerCase() === demoUser || email.toLowerCase() === 'admin@example.com') && password === demoPass) {
+        showSuccess('Đăng nhập thành công! Đang chuyển hướng...');
+        // Chuyển hướng giả lập
+        setTimeout(()=> {
+          window.location.href = 'nguyenthanhnguyen.html'; // đổi sang trang thật của bạn
+        }, 900);
+      } else {
+        showError('Tên đăng nhập hoặc mật khẩu không đúng.');
+      }
+    });
+
+    function showError(msg){
+      errorBox.textContent = msg;
+      errorBox.classList.remove('success');
+    }
+    function showSuccess(msg){
+      errorBox.textContent = msg;
+      errorBox.classList.add('success');
+    }
+  </script>
+</body>
+</html>
