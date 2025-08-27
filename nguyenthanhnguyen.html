@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nguyễn Thanh Nguyên – Website cá nhân</title>
+  <meta name="description" content="Website cá nhân của Nguyễn Thanh Nguyên: Giới thiệu, kỹ năng, dự án, kinh nghiệm, bài viết và liên hệ." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%231f2937'/%3E%3Ctext x='50' y='58' text-anchor='middle' font-size='44' fill='white' font-family='Arial' font-weight='bold'%3ENTN%3C/text%3E%3C/svg%3E" />
+  <meta property="og:title" content="Nguyễn Thanh Nguyên – Website cá nhân" />
+  <meta property="og:description" content="Giới thiệu, kỹ năng, dự án, kinh nghiệm và liên hệ." />
+  <meta property="og:type" content="website" />
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0b1220; --bg-soft:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
+      --brand:#22d3ee; --brand-2:#6366f1; --border:#1f2937; --radius:16px; --max:1120px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f8fafc; --bg-soft:#ffffff; --text:#0f172a; --muted:#475569; --border:#e2e8f0 }
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{font-family:system-ui,-apple-system,Seg ui UI,Roboto,Helvetica,Arial;line-height:1.6;background:var(--bg);color:var(--text)}
+    a{color:#60a5fa;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;z-index:50;background:color-mix(in oklab, var(--bg) 85%, transparent);backdrop-filter:saturate(130%) blur(8px);border-bottom:1px solid var(--border)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .avatar{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:white;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 6px 18px #0006}
+    .brand h1{font-size:18px;margin:0}
+    .menu{display:flex;gap:16px;align-items:center}
+    .menu a{padding:8px 10px;border-radius:10px}
+    .menu a:hover{background:color-mix(in oklab,var(--bg-soft) 90%, transparent)}
+    .burger{display:none;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);padding:8px 10px;border-radius:10px}
+    .toggle{border:1px solid var(--border);background:var(--bg-soft);padding:8px 10px;border-radius:10px;cursor:pointer}
+    @media (max-width:880px){ .menu{display:none} .burger{display:inline-flex} }
+
+    /* Drawer */
+    .overlay{position:fixed;inset:0;background:#0008;opacity:0;pointer-events:none;transition:.2s}
+    .overlay.show{opacity:1;pointer-events:auto}
+    .drawer{position:fixed;inset:0 0 0 auto;width:78%;max-width:360px;background:var(--bg);border-left:1px solid var(--border);transform:translateX(100%);transition:.25s;z-index:60}
+    .drawer.open{transform:none}
+    .drawer a{display:block;padding:14px 18px;border-bottom:1px solid var(--border)}
+
+    /* Hero */
+    .hero{padding:56px 0 18px;border-bottom:1px solid var(--border)}
+    .hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+    .hero h2{font-size:40px;line-height:1.2;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 0 16px}
+    .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--bg-soft);color:var(--text);padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:600}
+    .btn-primary{border:none;background:linear-gradient(90deg,var(--brand),var(--brand-2));color:white;box-shadow:0 10px 25px #0006}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .tag{font-size:12px;border:1px solid var(--border);padding:4px 8px;border-radius:999px;color:var(--muted)}
+    .photo{border:1px solid var(--border);border-radius:16px;overflow:hidden}
+    .photo img{display:block;width:100%;height:auto}
+    @media (max-width:980px){ .hero .wrap{grid-template-columns:1fr} }
+
+    /* Sections */
+    section{padding:40px 0;border-bottom:1px solid var(--border)}
+    h3{font-size:28px;margin:0 0 12px}
+    p.lead{color:var(--muted);margin-top:0}
+
+    /* Skills */
+    .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+    .card h4{margin:0 0 6px}
+    @media (max-width:980px){.skills{grid-template-columns:1fr 1fr}}
+    @media (max-width:560px){.skills{grid-template-columns:1fr}}
+
+    /* Projects */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .project{background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+    .project img{width:100%;height:160px;object-fit:cover}
+    .project .p{padding:14px;flex:1}
+    .project .p p{color:var(--muted)}
+    .project .actions{display:flex;gap:10px;padding:14px}
+    @media (max-width:980px){.grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+
+    /* Timeline */
+    .timeline{display:grid;gap:14px}
+    .item{display:grid;grid-template-columns:140px 1fr;gap:16px}
+    .item time{color:var(--muted)}
+    @media (max-width:620px){.item{grid-template-columns:1fr}}
+
+    /* Contact */
+    .field{display:grid;gap:6px;margin-bottom:10px}
+    label{font-size:14px;color:var(--muted)}
+    input, textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);outline:none}
+    input:focus, textarea:focus{box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 30%, transparent)}
+    textarea{min-height:120px;resize:vertical}
+    .note{font-size:12px;color:var(--muted)}
+
+    footer{padding:22px 0;color:var(--muted)}
+    .copyright{font-size:12px;text-align:center;margin-top:8px}
+
+    /* Print */
+    @media print{ header, .hero .photo, .btn, .project img{display:none !important} body{background:white;color:black} .card, .project, .item, input, textarea{border:1px solid #ccc} }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nguyễn Thanh Nguyên",
+    "url": "https://example.com",
+    "jobTitle": "Kỹ sư/ Nhà phát triển",
+    "sameAs": ["https://github.com/your-github","https://www.linkedin.com/in/your-linkedin"],
+    "knowsAbout": ["Web Development","Data","AI"],
+    "email": "mailto:lienhe@example.com"
+  }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="avatar" aria-hidden="true">NTN</div>
+        <h1>Nguyễn Thanh Nguyên</h1>
+      </div>
+      <nav class="menu" aria-label="Điều hướng chính">
+        <a href="#gioi-thieu">Giới thiệu</a>
+        <a href="#ky-nang">Kỹ năng</a>
+        <a href="#du-an">Dự án</a>
+        <a href="#kinh-nghiem">Kinh nghiệm</a>
+        <a href="#bai-viet">Bài viết</a>
+        <a href="#lien-he">Liên hệ</a>
+      </nav>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="themeToggle" class="toggle" aria-label="Đổi giao diện sáng/tối">🌓</button>
+        <button id="openMenu" class="burger" aria-label="Mở menu">☰</button>
+      </div>
+    </div>
+    <div id="overlay" class="overlay"></div>
+    <aside id="drawer" class="drawer" aria-label="Menu di động">
+      <a href="#gioi-thieu">Giới thiệu</a>
+      <a href="#ky-nang">Kỹ năng</a>
+      <a href="#du-an">Dự án</a>
+      <a href="#kinh-nghiem">Kinh nghiệm</a>
+      <a href="#bai-viet">Bài viết</a>
+      <a href="#lien-he">Liên hệ</a>
+      <a href="#" onclick="closeDrawer();return false;">Đóng</a>
+    </aside>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container wrap">
+      <div>
+        <h2>Xin chào, mình là <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent">Nguyễn Thanh Nguyên</span> 👋</h2>
+        <p>Một người yêu công nghệ, thích xây dựng sản phẩm số hữu ích. Mình tập trung vào <strong>phát triển web</strong>, <strong>khoa học dữ liệu</strong> và <strong>AI ứng dụng</strong>.</p>
+        <div class="tags">
+          <span class="tag">HTML/CSS/JS</span>
+          <span class="tag">Python</span>
+          <span class="tag">Django/Flask</span>
+          <span class="tag">React</span>
+          <span class="tag">Data & AI</span>
+        </div>
+        <p style="margin:14px 0 0">
+          <a class="btn btn-primary" href="#lien-he">Kết nối</a>
+          <a class="btn" href="#du-an">Xem dự án</a>
+          <a class="btn" href="./Nguyen-Thanh-Nguyen-CV.pdf" download>⬇ Tải CV</a>
+        </p>
+      </div>
+      <div class="photo">
+        <img alt="Ảnh đại diện/ảnh minh hoạ" src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1080&auto=format&fit=crop" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Giới thiệu -->
+  <section id="gioi-thieu">
+    <div class="container">
+      <h3>Giới thiệu</h3>
+      <p class="lead">Mình thích tạo ra trải nghiệm người dùng mượt mà, tối ưu hiệu năng và dễ bảo trì. Quan điểm làm việc: đơn giản, rõ ràng, đo lường được.</p>
+      <div class="card">
+        <ul style="margin:0 0 8px 18px">
+          <li>Ưu tiên chất lượng mã nguồn
+Tôi luôn đặt chất lượng mã nguồn làm ưu tiên hàng đầu trong quá trình phát triển phần mềm. Điều này không chỉ đảm bảo hệ thống vận hành ổn định mà còn giúp đội ngũ dễ dàng bảo trì, mở rộng về sau. Tôi thường áp dụng các nguyên tắc clean code, viết mã dễ đọc, dễ hiểu, đồng thời kết hợp với viết test cơ bản (unit/integration test) để tăng độ tin cậy cho hệ thống.</li>
+          <li>🚀 Thích làm sản phẩm end-to-end: từ ý tưởng đến triển khai và đo lường hiệu quả
+Tôi đặc biệt hứng thú với việc tham gia toàn bộ vòng đời phát triển sản phẩm — từ lúc hình thành ý tưởng, xây dựng MVP, triển khai thực tế, đến giai đoạn theo dõi, đánh giá hiệu suất và tối ưu liên tục. Trải nghiệm này giúp tôi hiểu sâu hơn về nhu cầu người dùng, cũng như cách công nghệ có thể giải quyết các vấn đề thực tiễn.</li>
+          <li>🤝 Gắn kết cộng đồng – chia sẻ kiến thức qua workshop và bài viết
+Tôi tin vào sức mạnh của cộng đồng và tinh thần học hỏi không ngừng. Vì vậy, tôi thường xuyên chia sẻ kiến thức và kinh nghiệm của mình thông qua các buổi workshop nội bộ hoặc cộng đồng, cũng như viết blog kỹ thuật trên các nền tảng như Medium, GitHub hoặc các trang cộng đồng chuyên môn. Đây là cách tôi học thêm từ người khác, đồng thời đóng góp lại cho cộng đồng công nghệ.</li>
+        </ul>
+        <p class="note">* Có thể tuỳ biến nội dung, thêm liên kết mạng xã hội (GitHub/LinkedIn/Facebook) ngay bên dưới.</p>
+        <p style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn" href="https://github.com/your-github" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://www.linkedin.com/in/your-linkedin" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://facebook.com/your-facebook" target="_blank" rel="noopener">Facebook</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kỹ năng -->
+  <section id="ky-nang">
+    <div class="container">
+      <h3>Kỹ năng</h3>
+      <p class="lead">Một số công nghệ mình sử dụng thường xuyên.</p>
+      <div class="skills">
+        <a href="NguyenThanhNguyen-V3.html" style="text-decoration: none; color: inherit;">
+  <div class="card">
+    <h4>Frontend</h4>
+    <p>HTML5, CSS3, JavaScript, React, Tailwind, Responsive, Web Vitals</p>
+  </div>
+</a>
+        <a href="NguyenThanhNguyen-V4.html" class="card block p-4 border rounded-lg shadow hover:bg-gray-100 transition">
+  <h4 class="text-xl font-semibold mb-2">Backend</h4>
+  <p>Python, Flask/Django, REST API, Auth, SQL (PostgreSQL/MySQL)</p>
+</a>
+        <div class="card"><h4>Data & AI</h4><p>Pandas, NumPy, scikit-learn, cơ bản Pytorch/TensorFlow, trực quan hoá</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dự án -->
+  <section id="du-an">
+    <div class="container">
+      <h3>Dự án nổi bật</h3>
+      <p class="lead">Một vài dự án cá nhân/nhóm gần đây.</p>
+      <div class="grid">
+        <div class="project">
+          <img alt="Ảnh dự án" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1080&auto=format&fit=crop" />
+          <div class="p">
+            <h4>VJ Learn – Nền tảng học trực tuyến</h4>
+            <p>Xây dựng LMS mini với bài giảng, quiz, bảng xếp hạng; backend Flask, frontend React.</p>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#">Demo</a>
+            <a class="btn" href="#">Source</a>
+          </div>
+        </div>
+        <div class="project">
+          <img alt="Ảnh dự án" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1080&auto=format&fit=crop" />
+          <div class="p">
+            <h4>Data Insight – Dashboard số liệu</h4>
+            <p>Pipeline ETL đơn giản, trực quan hoá số liệu theo thời gian thực cho nhóm vận hành.</p>
+          </div>
+          <div class="actions">
+            <a class="btn" href="NguyenThanhNguyen-V1.html">Xem</a>
+            <a class="btn" href="#">Source</a>
+          </div>
+        </div>
+        <div class="project">
+          <img alt="Ảnh dự án" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1080&auto=format&fit=crop" />
+          <div class="p">
+            <h4>Mini AI – Ứng dụng gợi ý</h4>
+            <p>Ứng dụng nhỏ dùng mô hình ML để gợi ý nội dung, triển khai trên web nhẹ.</p>
+          </div>
+          <div class="actions">
+            <a class="btn" href="NguyenThanhNguyen-V2.html">Dùng thử</a>
+            <a class="btn" href="#">Source</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kinh nghiệm & Học vấn -->
+  <section id="kinh-nghiem">
+    <div class="container">
+      <h3>Kinh nghiệm & Học vấn</h3>
+      <div class="timeline">
+        <div class="item">
+          <time>2024 – nay</time>
+          <div class="card">
+            <strong>Freelance Developer</strong>
+            <p>Làm việc với khách hàng SMEs: website, tích hợp thanh toán, tối ưu SEO, Core Web Vitals.</p>
+          </div>
+        </div>
+        <div class="item">
+          <time>2022 – 2024</time>
+          <div class="card">
+            <strong>Intern/Junior Developer</strong>
+            <p>Tham gia dự án nội bộ: API, dashboard, CI/CD cơ bản, viết tài liệu kỹ thuật.</p>
+          </div>
+        </div>
+        <div class="item">
+          <time>2019 – 2022</time>
+          <div class="card">
+            <strong>Học vấn</strong>
+            <p>Chuyên ngành CNTT (hoặc ngành liên quan). Tham gia CLB lập trình, cuộc thi hackathon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bài viết -->
+  <section id="bai-viet">
+    <div class="container">
+      <h3>Bài viết gần đây</h3>
+      <div class="grid">
+        <article class="project">
+          <div class="p">
+            <h4>Checklist tối ưu hiệu năng web năm 2025</h4>
+            <p class="note">18/08/2025 · 5 phút đọc</p>
+            <p>Những điểm quan trọng khi tối ưu TTFB, LCP, CLS và caching.</p>
+            <div class="actions"><a class="btn" href="#">Đọc</a></div>
+          </div>
+        </article>
+        <article class="project">
+          <div class="p">
+            <h4>Hướng dẫn dựng REST API với Flask</h4>
+            <p class="note">02/08/2025 · 7 phút đọc</p>
+            <p>Thiết kế routes, auth cơ bản, cấu trúc dự án gọn gàng.</p>
+            <div class="actions"><a class="btn" href="#">Đọc</a></div>
+          </div>
+        </article>
+        <article class="project">
+          <div class="p">
+            <h4>Ghi chú học máy: từ dữ liệu đến mô hình</h4>
+            <p class="note">14/07/2025 · 8 phút đọc</p>
+            <p>Quy trình chuẩn hoá dữ liệu, chia tập, đánh giá mô hình.</p>
+            <div class="actions"><a class="btn" href="#">Đọc</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Liên hệ -->
+  <section id="lien-he">
+    <div class="container">
+      <h3>Liên hệ</h3>
+      <p class="lead">Mở cho cơ hội cộng tác, dự án freelance và chia sẻ cộng đồng.</p>
+      <div class="card">
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Họ và tên</label>
+            <input id="name" name="name" required placeholder="VD: Nguyễn Thanh Nguyên" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="VD: nguyenthanhnguyen@example.com" />
+          </div>
+          <div class="field">
+            <label for="msg">Nội dung</label>
+            <textarea id="msg" name="msg" required placeholder="Bạn muốn trao đổi điều gì?" ></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Gửi tin nhắn</button>
+          <div id="status" class="note" style="margin-top:8px"></div>
+        </form>
+      </div>
+      <p class="note" style="margin-top:10px">* Bạn có thể cấu hình form gửi về Google Sheets, Formspree hoặc backend của bạn.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <span>© 2025 Nguyễn Thanh Nguyên, Địa chỉ liên hệ: 101/4/22 đường Tết Mậu Thân, KP6, P. Đạo Thạnh, tỉnh Đồng Tháp</span>
+        <a href="#">RSS</a>
+        <a href="mailto:nguyenthanhnguyen@tgu.edu.vn" class="card block p-4 border rounded-lg shadow hover:bg-gray-100 transition">nguyenthanhnguyen@tgu.edu.vn</a>
+      </div>
+      <div class="copyright">Thiết kế tối giản, nhanh và dễ chỉnh sửa.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle (light/dark)
+    const themeToggle = document.getElementById('themeToggle');
+    const userTheme = localStorage.getItem('theme');
+    if(userTheme){ document.documentElement.style.colorScheme = userTheme; }
+    themeToggle.addEventListener('click', () => {
+      const current = getComputedStyle(document.documentElement).colorScheme;
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.style.colorScheme = next;
+      localStorage.setItem('theme', next);
+    });
+
+    // Drawer
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    const openMenu = document.getElementById('openMenu');
+    const closeDrawer = () => { drawer.classList.remove('open'); overlay.classList.remove('show'); }
+    openMenu.addEventListener('click', ()=>{ drawer.classList.add('open'); overlay.classList.add('show'); });
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+
+    // Contact form (demo)
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ok = form.name.value && form.email.value && form.msg.value;
+      if(!ok){ status.textContent = 'Vui lòng điền đầy đủ thông tin.'; return; }
+      status.textContent = 'Đã gửi! Mình sẽ phản hồi sớm.';
+      status.style.color = 'green';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
